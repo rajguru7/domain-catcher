@@ -1,0 +1,24 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "domain-catcher"
+authors = [{name = "Saurabh Rajguru"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+requires-python = ">=3.8"
+dependencies = [
+    "tree_sitter >= 0.20.3, < 0.20.5",  # TODO: check dependency versions
+]
+
+[project.urls]
+Home = "https://github.com/rajguru7/domain-catcher"
+
+[project.optional-dependencies]
+dev = ["ruff", "pytest", "pytest-cov", "twine"]
+
+[project.scripts]
+domain-catcher = "domain_catcher.cli:main"
