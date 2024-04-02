@@ -1,4 +1,4 @@
 dist/
-domain_catcher/__pycache__/
+**/__pycache__
 vendor/
 build/
