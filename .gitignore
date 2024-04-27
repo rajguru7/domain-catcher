@@ -2,3 +2,5 @@ dist/
 **/__pycache__
 vendor/
 build/
+temp/
+results/
