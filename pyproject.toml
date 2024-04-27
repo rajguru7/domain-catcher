@@ -11,7 +11,21 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 requires-python = ">=3.8"
 dependencies = [
-    "tree_sitter >= 0.20.3, < 0.20.5",  # TODO: check dependency versions
+    "tree-sitter >= 0.21.0, < 0.22.0",  # TODO: check dependency versions
+    "tree-sitter-languages >= 1.10.0, < 1.11.0",
+    # "tree-sitter-python >= 0.21.0, < 0.22.0",
+    # "tree-sitter-javascript >= 0.21.0, < 0.22.0",
+    # "tree-sitter-html >= 0.21.0, < 0.22.0",
+    # "tree-sitter-css >= 0.21.0, < 0.22.0",
+    # "tree-sitter-json >= 0.21.0, < 0.22.0",
+    # "tree-sitter-go >= 0.21.0, < 0.22.0",
+    # "tree-sitter-java >= 0.21.0, < 0.22.0",
+    # "tree-sitter-rust >= 0.0.1, < 0.1.0",
+    # "tree-sitter-cpp >= 0.21.0, < 0.22.0",
+    # "tree-sitter-typescript >= 0.21.0, < 0.22.0",
+    # "tree-sitter-bash >= 0.21.0, < 0.22.0",
+    # "tree-sitter-make >= 0.21.0, < 0.22.0",
+    "python-magic >= 0.4.0, < 0.5.0"
 ]
 
 [project.urls]

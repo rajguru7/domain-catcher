@@ -40,8 +40,9 @@ def main():
     dc.detect_languages()
     dc.set_parsers()
     # print(dc.files_list)
-    urls = dc.run()
-    print(json.dumps({"urls": urls}))
+    ret = dc.run()
+    # print(json.dumps({"urls": urls}))
+    print(json.dumps(ret))
 
 
 if __name__ == "__main__":

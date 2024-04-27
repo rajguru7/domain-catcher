@@ -1,14 +1,55 @@
 from tree_sitter import Language
+# import tree_sitter_python
+# import tree_sitter_bash
+# import tree_sitter_javascript
+# import tree_sitter_typescript
+# import tree_sitter_html
+# import tree_sitter_css
+# import tree_sitter_java
+# import tree_sitter_c
+# import tree_sitter_cpp
+# import tree_sitter_make
+# import tree_sitter_go
 import subprocess
+import logging
 import os
 
 dc_dir = os.path.join(str(os.getenv("HOME")), ".dc")
 
+LOG = logging.getLogger(__name__)
+LOG.setLevel(logging.DEBUG)
+f_handler = logging.FileHandler('.dc.log')
+f_handler.setLevel(logging.ERROR)
+f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+f_handler.setFormatter(f_format)
+LOG.addHandler(f_handler)
+
 grammar_repos = {
     'python': 'https://github.com/tree-sitter/tree-sitter-python',
     'bash': 'https://github.com/tree-sitter/tree-sitter-bash',
-    # Add more mappings as needed
+    'javascript': 'https://github.com/tree-sitter/tree-sitter-javascript',
+    'typescript': 'https://github.com/tree-sitter/tree-sitter-typescript',
+    'html': 'https://github.com/tree-sitter/tree-sitter-html',
+    'css': 'https://github.com/tree-sitter/tree-sitter-css',
+    'java': 'https://github.com/tree-sitter/tree-sitter-java',
+    'c': 'https://github.com/tree-sitter/tree-sitter-c',
+    'cpp': 'https://github.com/tree-sitter/tree-sitter-cpp'
+    # 'makefile': 'https://github.com/tree-sitter-grammars/tree-sitter-make'
 }
+
+# grammar_repos = {
+#     'python': tree_sitter_python.language(),
+#     'go': tree_sitter_go.language(),
+#     'bash': tree_sitter_bash.language(),
+#     'javascript': tree_sitter_javascript.language(),
+#     'typescript': tree_sitter_typescript.language(),
+#     'html': tree_sitter_html.language(),
+#     'css': tree_sitter_css.language(),
+#     'java': tree_sitter_java.language(),
+#     'c': tree_sitter_c.language(),
+#     'cpp': tree_sitter_cpp.language(),
+#     'makefile': tree_sitter_make.language()
+# }
 
 def clone_grammar(language_name, grammar_url, grammars_dir='tree-sitter-grammars'):
     """
@@ -29,7 +70,7 @@ def clone_grammar(language_name, grammar_url, grammars_dir='tree-sitter-grammars
         print(f"Cloning {language_name} grammar repository...")
         subprocess.run(["git", "clone", grammar_url, grammar_path], check=True)
     else:
-        print(f"Grammar repository for {language_name} already exists.")
+        LOG.info(f"Grammar repository for {language_name} already exists.")
     
     return grammar_path
 
@@ -58,7 +99,7 @@ def get_tree_sitter_parser(language):
         if grammar_repo_url:
             grammar_path = clone_grammar(language, grammar_repo_url, grammar_dir)
         else:
-            print(f"No grammar repository found for language: {language}")
+            LOG.warn(f"No grammar repository found for language: {language}")
             return None
         
         # Build the shared library
@@ -67,8 +108,21 @@ def get_tree_sitter_parser(language):
             [grammar_path],
         )
         
-        print(f"Built parser shared object file at {so_file_path}")
+        # print(f"Built parser shared object file at {so_file_path}")
+        LOG.info(f"Built parser shared object file at {so_file_path}")
     else:
-        print(f"Parser for {language} already exists.")
+        # print(f"Parser for {language} already exists.")
+        LOG.info(f"Parser for {language} already exists.")
     
     return Language(so_file_path, language)
+
+# def get_tree_sitter_parser(language):
+#     """
+#     Fetches the Tree-sitter parser shared object file for the specified
+#     language.
+#     
+#     :param language: The language to build the parser for (e.g., 'python').
+#     :param dc_dir: Domain Catcher runtime path
+#     """
+#     
+#     return Language(grammar_repos[language], language)
